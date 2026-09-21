@@ -53,6 +53,40 @@ Reservation WaitingList::dequeue(){
     }
 }
 
+Reservation WaitingList::processNextWaitingStudent(string resourceID) {
+    if (isEmpty()) {    //check if empty firsr
+        return Reservation();
+    }
+
+    WaitNode* current = front;
+    WaitNode* previous = nullptr;
+
+    while (current != nullptr) {
+        if (current->data.getResourceID() == resourceID) {
+            Reservation matchedRes = current->data;
+
+            if (current == front) {
+                front = front->next;
+                if (front == nullptr) {
+                    rear = nullptr; //queue now empty so now rear ptr reset
+                }
+            } else {
+                previous->next = current->next;
+                if (current == rear) {
+                    rear = previous;    //update rear ptr
+                }
+            }
+
+            delete current; //free memory
+            return matchedRes;
+        }
+        previous = current;
+        current = current->next;
+    }
+
+    return Reservation(); //return empty if no match found
+}
+
 //function to display waiting list: it iterates through the queue and 
 void WaitingList::displayWaitingList(){
     if(isEmpty()){
@@ -77,21 +111,3 @@ void WaitingList::displayWaitingList(){
         cout << "------------------------------------------" << endl;
     }
 }
-
-/*  FROM PLAN DOCUMENT: 
-    Create a “Waiting List” Queue
-    Detect the availability of resources
-        If resource is available => create reservation
-        If not => waiting lists
-    Add the student to the queue
-        Make sure they give all the necessary information
-    Keep the FIFO order
-    Display the waiting list
-        Add a “View Waiting Lists” function to the menu
-            User should be able to see who is waiting for each resource
-    Process the queue when the resource becomes available
-        When a resource becomes available
-            Check its waiting queue
-            If nobody is waiting => leave it available
-            If someone is waiting => process the person at the front (FIFO)
-*/

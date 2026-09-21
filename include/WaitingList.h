@@ -5,22 +5,23 @@
 using namespace std;
 
 struct WaitNode {
-    Reservation data;  // Data of the student in the waiting list
-    WaitNode* next;    // Pointer to the next node in the queue
-    WaitNode(Reservation res) : data(res), next(nullptr) {}
+    Reservation data;   //holds reservation data of student at this node
+    WaitNode* next;     //points to next node in queue
+    WaitNode(Reservation res) : data(res), next(nullptr) {} //struct constructor 
 };
 
 class WaitingList {
 private:
-    WaitNode* front;
-    WaitNode* rear;
+    WaitNode* front;    //pointer to front of queue
+    WaitNode* rear;     //pointer to rear of queue
 public:
-    WaitingList();  // Constructor for WaitingList class
-    ~WaitingList();  // Destructor for WaitingList class
-    bool isEmpty() const;
-    void enqueue(Reservation resToQueue);    // Function to add a student to the waiting list queue
-    Reservation dequeue();  // Function to remove a student from the waiting list queue
-    void displayWaitingList();  // Function to print out the waiting list queue
+    WaitingList();  //constructor
+    ~WaitingList();  //destructor
+    bool isEmpty() const;   //returns true if queue is empty
+    void enqueue(Reservation resToQueue);   //adds to end of queue
+    Reservation dequeue();  //removes first from queue
+    Reservation processNextWaitingStudent(string resourceID);   //processes next
+    void displayWaitingList();  //prints entire queue
 };
 
 #endif
