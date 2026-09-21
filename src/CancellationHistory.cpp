@@ -44,40 +44,6 @@ Reservation CancellationHistory::pop() {
     return resData; //returns cancelled reservation's data
 }
 
-Reservation WaitingList::processNextWaitingStudent(string resourceID) {
-    if (isEmpty()) {
-        return Reservation();
-    }
-
-    WaitNode* current = front;
-    WaitNode* previous = nullptr;
-
-    while (current != nullptr) {
-        if (current->data.getResourceID() == resourceID) {
-            Reservation matchedRes = current->data;
-
-            if (current == front) {
-                front = front->next;
-                if (front == nullptr) {
-                    rear = nullptr;
-                }
-            } else {
-                previous->next = current->next;
-                if (current == rear) {
-                    rear = previous;
-                }
-            }
-
-            delete current;
-            return matchedRes;
-        }
-        previous = current;
-        current = current->next;
-    }
-
-    return Reservation(); // Return empty if no match found for this resource
-}
-
 // display function
 void CancellationHistory::displayHistory() const {
     if (isEmpty()) {
