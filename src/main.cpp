@@ -11,12 +11,17 @@ int main() {
     ReservationManager resvMgr;
     WaitingList wl;
     CancellationHistory ch;
+    
 
     // test managers
+    resMgr.loadResources("data/resources.txt");
+    resvMgr.loadReservations("data/reservations.txt");
+    
     resMgr.displayResources();
+    resvMgr.displayReservations();
 
-    Reservation r;
     resvMgr.createReservation(resMgr);
+    Reservation r("RES_001", "987654", "Jane Smith", "R101", "2026-10-01");
 
     // test queue & stack
     wl.enqueue(r);
@@ -25,7 +30,7 @@ int main() {
     ch.push(r);
     ch.pop();
 
-    wl.processNextWaitingStudent("PC_01");
+    wl.processNextWaitingStudent("R101");
 
     return 0;
 }

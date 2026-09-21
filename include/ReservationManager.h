@@ -39,7 +39,7 @@ class ReservationManager{
         bool checkAvailability(string resourceID, string reservationDate);
         
         void createReservation(ResourceManager& resourceManager);
-        void cancelReservation(ResourceManager& resourceManager);
+        void cancelReservation(ResourceManager &resMgr, WaitingList &wl);
 
 
 

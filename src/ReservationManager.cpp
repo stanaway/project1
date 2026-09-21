@@ -234,7 +234,7 @@ void ReservationManager::createReservation(ResourceManager& resourceManager) {
     }
 }
 
-void ReservationManager::cancelReservation(ResourceManager& resourceManager){
+void ReservationManager::cancelReservation(ResourceManager& resourceManager,WaitingList &wl){
     string reservationID;
 
     cout << "Enter Reservation ID to cancel: ";
@@ -260,8 +260,9 @@ void ReservationManager::cancelReservation(ResourceManager& resourceManager){
         resource->setAvailabilityStatus("Available");
 
         // 5. Check waiting list
-        processNextWaitingStudent(
+        wl.processNextWaitingStudent(
             removedReservation.getResourceID()
+
         );
     }
     
