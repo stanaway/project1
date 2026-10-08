@@ -20,7 +20,7 @@ int main() {
     resMgr.displayResources();
     resvMgr.displayReservations();
 
-    resvMgr.createReservation(resMgr);
+    resvMgr.createReservation(resMgr, waitingList);
     Reservation r("RES_001", "987654", "Jane Smith", "R101", "2026-10-01");
 
     // test queue & stack
