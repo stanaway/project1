@@ -41,7 +41,7 @@ class ReservationManager{
         void createReservation(ResourceManager& resourceManager, WaitingList& wl);
         void cancelReservation(ResourceManager &resMgr, WaitingList &wl, CancellationHistory &ch);
 
-
+        ReservationNode* getFirstNode() const { return head; }  //needed for reeservationsearch class -emma
 
 };
 
