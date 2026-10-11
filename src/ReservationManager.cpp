@@ -309,7 +309,8 @@ void ReservationManager::createReservation(
 // Cancel an active reservation
 void ReservationManager::cancelReservation(
     ResourceManager& resourceManager,
-    WaitingList& wl
+    WaitingList& wl,
+    CancellationHistory& ch
 ) {
     string reservationID;
 
@@ -329,7 +330,7 @@ void ReservationManager::cancelReservation(
     }
 
     // Save the cancelled reservation in the cancellation history stack
-    cancellationHistory.push(removedReservation);
+    ch.push(removedReservation);
 
     string resourceID = removedReservation.getResourceID();
 
@@ -338,7 +339,7 @@ void ReservationManager::cancelReservation(
     if (resource != nullptr) {
         // Find the next waiting student for this resource
         Reservation nextReservation =
-            wl.processNextWaitingStudent(resourceID);
+            wl.processNextWaitingStudent(resourceID, removedReservation.getReservationDate());
 
         if (!nextReservation.getReservationID().empty()) {
             if (insertReservation(nextReservation)) {

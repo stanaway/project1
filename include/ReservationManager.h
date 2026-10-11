@@ -17,7 +17,7 @@ using namespace std;
 class ReservationManager{
     private:
         ReservationNode* head;
-        CancellationHistory cancellationHistory;
+        //CancellationHistory cancellationHistory; //obsolete because of ch in main is now passed by reference
         WaitingList waitingList;
 
     public:
@@ -38,8 +38,8 @@ class ReservationManager{
         
         bool checkAvailability(string resourceID, string reservationDate);
         
-        void createReservation(ResourceManager& resourceManager);
-        void cancelReservation(ResourceManager &resMgr, WaitingList &wl);
+        void createReservation(ResourceManager& resourceManager, WaitingList& wl);
+        void cancelReservation(ResourceManager &resMgr, WaitingList &wl, CancellationHistory &ch);
 
 
 

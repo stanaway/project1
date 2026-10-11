@@ -53,7 +53,7 @@ Reservation WaitingList::dequeue(){
     }
 }
 
-Reservation WaitingList::processNextWaitingStudent(string resourceID) {
+Reservation WaitingList::processNextWaitingStudent(string resourceID, string reservationDate) {
     if (isEmpty()) {    //check if empty firsr
         return Reservation();
     }
@@ -62,7 +62,7 @@ Reservation WaitingList::processNextWaitingStudent(string resourceID) {
     WaitNode* previous = nullptr;
 
     while (current != nullptr) {
-        if (current->data.getResourceID() == resourceID) {
+        if ((current->data.getResourceID() == resourceID)&&(current->data.getReservationDate() == reservationDate)) {
             Reservation matchedRes = current->data;
 
             if (current == front) {
