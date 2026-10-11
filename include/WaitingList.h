@@ -20,7 +20,7 @@ public:
     bool isEmpty() const;   //returns true if queue is empty
     void enqueue(Reservation resToQueue);   //adds to end of queue
     Reservation dequeue();  //removes first from queue
-    Reservation processNextWaitingStudent(string resourceID);   //processes next
+    Reservation processNextWaitingStudent(string resourceID, string reservationDate);   //processes next
     void displayWaitingList();  //prints entire queue
 };
 

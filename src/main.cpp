@@ -34,8 +34,8 @@ int main() {
     resMgr.loadResources("data/resources.txt");
     resvMgr.loadReservations("data/reservations.txt");
     
-    int choice = 0; 
-    
+    int choice = 0;
+
     //  main menu loop!
     while (choice != 8) {
         printMenu();
