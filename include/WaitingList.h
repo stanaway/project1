@@ -22,6 +22,7 @@ public:
     Reservation dequeue();  //removes first from queue
     Reservation processNextWaitingStudent(string resourceID, string reservationDate);   //processes next
     void displayWaitingList();  //prints entire queue
+    bool containsID(string reservationID);
 };
 
 #endif

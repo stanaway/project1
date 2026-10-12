@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "Resource.h"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -74,5 +75,50 @@ bool ResourceManager::resourceExists(string resourceID){
     else{
         return false;
     }
+
+}
+
+void ResourceManager::quickSort(int low, int high){
+    if(low < high){
+        int pivotIndex = partition(low, high);
+
+        quickSort(low, pivotIndex - 1);
+        quickSort(pivotIndex + 1, high);
+    }
+} 
+
+
+
+
+int ResourceManager::partition(int low, int high){
+
+    string pivot = resources[high].getResourceName();
+    int i = low - 1;
+
+    for(int j = low; j < high; j++){
+        if(resources[j].getResourceName() <= pivot){
+            i++;
+
+            Resource temp = resources[i];
+            resources[i] = resources[j];
+            resources[j] = temp;
+        }
+    }
+
+    Resource temp = resources[i+1];
+    resources[i+1] = resources[high];
+    resources[high] = temp;
+    return i + 1;
+}
+
+
+
+
+void ResourceManager::sortResourcesByName(){
+    if(resources.empty()){
+        return;
+    }
+
+    quickSort(0, resources.size() - 1);
 
 }
