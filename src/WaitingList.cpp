@@ -111,3 +111,16 @@ void WaitingList::displayWaitingList(){
         cout << "------------------------------------------" << endl;
     }
 }
+
+bool WaitingList::containsID(string reservationID){
+    WaitNode* current = front;
+    while(current != nullptr) {
+        if(current->data.getReservationID() == reservationID){
+            return true;
+        }
+
+        current = current->next;
+    }
+
+    return false;
+}
