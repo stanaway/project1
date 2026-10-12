@@ -218,10 +218,14 @@ bool ReservationManager::checkAvailability(
 }
 
 // Create a reservation
+
 void ReservationManager::createReservation(
-    ResourceManager& resourceManager,
-    WaitingList& wl
-) {
+    ResourceManager& resourceManager
+) 
+
+{
+    WaitingList& wl = waitingList;
+
     string reservationID;
     string studentID;
     string studentName;

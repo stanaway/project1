@@ -1,3 +1,4 @@
+
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
@@ -10,6 +11,8 @@ using namespace std;
 
 class ResourceManager{
     private:
+        friend class ReportGenerator;
+
         vector<Resource> resources;
 
     public:

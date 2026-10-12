@@ -1,3 +1,4 @@
+
 #ifndef WAITING_LIST_H
 #define WAITING_LIST_H
 
@@ -12,6 +13,8 @@ struct WaitNode {
 
 class WaitingList {
 private:
+    friend class ReportGenerator;
+
     WaitNode* front;    //pointer to front of queue
     WaitNode* rear;     //pointer to rear of queue
 public:
