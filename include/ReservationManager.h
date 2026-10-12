@@ -35,7 +35,7 @@ public:
 
     bool checkAvailability(string resourceID, string reservationDate);
 
-    void createReservation(ResourceManager& resourceManager);
+    void createReservation(ResourceManager& resourceManager, WaitingList& wl);
 
     void cancelReservation(
         ResourceManager& resMgr,
@@ -46,6 +46,8 @@ public:
     ReservationNode* getFirstNode() const {
         return head;
     }
+
+    void updateResourceStatus(ResourceManager& resourceManager, string resourceID);
 };
 
 #endif

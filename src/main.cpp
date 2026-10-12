@@ -56,6 +56,7 @@ int main() {
 
         switch (choice) {
             case 1: //view resources
+                resMgr.sortResourcesByName();   //maybe???? unclear from prior merge conflict
                 resMgr.displayResources();
                 break;
             case 2: //create reservation

@@ -23,6 +23,12 @@ class ResourceManager{
 
         bool resourceExists(string resourceID);
 
+        void quickSort(int low, int high);
+
+        int partition(int low, int high);
+
+        void sortResourcesByName();
+
 };
 
 
