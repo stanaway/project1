@@ -10,8 +10,82 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <cctype>
 
 using namespace std;
+
+bool isBlank(string text){
+    for(char c : text){
+        if(isspace(static_cast<unsigned char>(c))){ // checks each character to see if it is a space
+            return false;
+        }
+    }
+    return true;
+}
+
+//-----------------------------------
+/*
+since dates in the source files are MM/DD/YYYY, the length of the entered date has to be 10 and we 
+have to check if the 2nd and the 5th characters are '/'
+*/
+bool isValidDate(string date){
+    if(date.length() != 10 || date[2] != '/' || date[5] != '/'){ 
+        return false;
+    }
+
+    for(int i = 0; i < 10; i++){
+        
+        if(i == 2 || i == 5){
+            continue;
+        }
+        
+        if(!isdigit(static_cast<unsigned char>(date[i]))){
+            return false;
+        }
+    }
+    // extracts the months, days, and years from the data and converts them to integers
+    int month = stoi(date.substr(0,2));
+    int day = stoi(date.substr(3,2));
+    int year = stoi(date.substr(6,4));
+
+
+    // checks if the year and the month are valid
+    if(year < 1 || month < 1 || month > 12){
+        return false;
+    }
+
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+
+    // checks if the year on the date is a leap year
+    bool leapYear = false;
+
+    if(year % 400 == 0){
+        leapYear = true;
+    }
+    else if(year % 100 == 0){
+        leapYear = false;
+    }
+    else if(year % 4 == 0){
+        leapYear = true;
+    }
+    //-----------------------------
+    //if the year is a leap year, February (daysInMonth[1]) is assigned to have 29 days
+    if(leapYear){
+        daysInMonth[1] = 29;
+    }
+    //-----------------------------
+    //checks if the date is valid
+    if(day >= 1 && day <= daysInMonth[month - 1]){
+        return true;
+    }
+    else{
+        return false;
+    }
+    
+
+}
+
 
 // Constructor
 ReservationManager::ReservationManager() {
@@ -111,9 +185,7 @@ void ReservationManager::displayReservations() {
 }
 
 // Find an active reservation by ID
-Reservation* ReservationManager::findReservation(
-    string reservationID
-) {
+Reservation* ReservationManager::findReservation(string reservationID) {
     ReservationNode* current = head;
 
     while (current != nullptr) {
@@ -138,6 +210,11 @@ bool ReservationManager::insertReservation(Reservation reservation) {
         return false;
     }
 
+    if(!checkAvailability(reservation.getResourceID(), reservation.getReservationDate())){
+        return false;
+
+    }
+
     ReservationNode* newNode = new ReservationNode(reservation);
 
     if (head == nullptr) {
@@ -157,9 +234,7 @@ bool ReservationManager::insertReservation(Reservation reservation) {
 }
 
 // Remove a reservation by ID
-bool ReservationManager::removeReservationByID(
-    string reservationID,
-    Reservation& removed
+bool ReservationManager::removeReservationByID(string reservationID, Reservation& removed
 ) {
     if (head == nullptr) {
         return false;
@@ -218,14 +293,10 @@ bool ReservationManager::checkAvailability(
 }
 
 // Create a reservation
-
 void ReservationManager::createReservation(
-    ResourceManager& resourceManager
-) 
-
-{
-    WaitingList& wl = waitingList;
-
+    ResourceManager& resourceManager,
+    WaitingList& wl
+) {
     string reservationID;
     string studentID;
     string studentName;
@@ -235,12 +306,12 @@ void ReservationManager::createReservation(
     cout << "Reservation ID: ";
     getline(cin, reservationID);
 
-    if (reservationID.empty()) {
+    if (isBlank(reservationID)) {
         cout << "Error: reservation ID cannot be blank." << endl;
         return;
     }
 
-    if (containsID(reservationID)) {
+    if (containsID(reservationID) || wl.containsID(reservationID)) {
         cout << "Error: reservation ID already exists." << endl;
         return;
     }
@@ -248,7 +319,7 @@ void ReservationManager::createReservation(
     cout << "Student ID: ";
     getline(cin, studentID);
 
-    if (studentID.empty()) {
+    if (isBlank(studentID)) {
         cout << "Error: student ID cannot be blank." << endl;
         return;
     }
@@ -256,7 +327,7 @@ void ReservationManager::createReservation(
     cout << "Student Name: ";
     getline(cin, studentName);
 
-    if (studentName.empty()) {
+    if (isBlank(studentName)) {
         cout << "Error: student name cannot be blank." << endl;
         return;
     }
@@ -264,7 +335,7 @@ void ReservationManager::createReservation(
     cout << "Resource ID: ";
     getline(cin, resourceID);
 
-    if (resourceID.empty()) {
+    if (isBlank(resourceID)) {
         cout << "Error: resource ID cannot be blank." << endl;
         return;
     }
@@ -279,7 +350,7 @@ void ReservationManager::createReservation(
     cout << "Reservation Date: ";
     getline(cin, reservationDate);
 
-    if (reservationDate.empty()) {
+    if (!isValidDate(reservationDate)) {
         cout << "Error: reservation date cannot be blank." << endl;
         return;
     }
@@ -302,7 +373,7 @@ void ReservationManager::createReservation(
     }
 
     if (insertReservation(newReservation)) {
-        resource->setAvailabilityStatus("Unavailable");
+        updateResourceStatus(resourceManager, resourceID);
 
         cout << "Reservation created successfully." << endl;
     } else {
@@ -321,7 +392,7 @@ void ReservationManager::cancelReservation(
     cout << "Enter Reservation ID to cancel: ";
     getline(cin, reservationID);
 
-    if (reservationID.empty()) {
+    if (isBlank(reservationID)) {
         cout << "Error: reservation ID cannot be blank." << endl;
         return;
     }
@@ -347,7 +418,7 @@ void ReservationManager::cancelReservation(
 
         if (!nextReservation.getReservationID().empty()) {
             if (insertReservation(nextReservation)) {
-                resource->setAvailabilityStatus("Unavailable");
+                updateResourceStatus(resourceManager, resourceID);
 
                 cout << "Waiting student "
                      << nextReservation.getStudentName()
@@ -386,4 +457,24 @@ void ReservationManager::cancelReservation(
     }
 
     cout << "Reservation cancelled successfully." << endl;
+}
+
+void ReservationManager::updateResourceStatus(ResourceManager& resourceManager, string resourceID){
+    Resource* resource = resourceManager.findResource(resourceID);
+
+    if(resource == nullptr){
+        return;
+    }
+
+    ReservationNode* current = head;
+
+    while(current != nullptr){
+        if(current->reservation.getResourceID() == resourceID){
+            resource->setAvailabilityStatus("Unavailable");
+            return;
+        }
+        current = current->next;
+    }
+
+    resource->setAvailabilityStatus("Available");
 }
