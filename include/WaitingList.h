@@ -12,6 +12,7 @@ struct WaitNode {
 
 class WaitingList {
 private:
+    friend class ReportGenerator;   //fixed compilation issue with scope
     WaitNode* front;    //pointer to front of queue
     WaitNode* rear;     //pointer to rear of queue
 public:
