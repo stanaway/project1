@@ -6,6 +6,7 @@
 #include "ReservationManager.h"
 #include "WaitingList.h"
 #include "CancellationHistory.h"
+#include "ReportGenerator.h"
 
 using namespace std;
 
@@ -20,7 +21,8 @@ void printMenu() {
     cout << "6. View Cancellation History" << endl;
     cout << "7. View Active Reservations" << endl;
     cout << "8. Search Reservations" << endl;   //new!
-    cout << "9. Exit" << endl;
+    cout << "9. Generate Reports" << endl;  //new(er)!!!
+    cout << "10. Exit" << endl;
     cout << "Enter your choice: ";
 }
 
@@ -39,7 +41,7 @@ int main() {
     int choice = 0;
 
     //  main menu loop!
-    while (choice != 9) {
+    while (choice != 10) {
         printMenu();
 
         //cin >> choice;    //obsolete because does not check bad inputs properly, causes infinite menu loop
@@ -49,7 +51,7 @@ int main() {
         {
             cin.clear();
             cin.ignore(10000, '\n');
-            cout << "Invalid selection. Please enter am integer between 1 and 9, inclusive." << endl;
+            cout << "Invalid selection. Please enter am integer between 1 and 10, inclusive." << endl;
             continue;
         }
         cin.ignore(10000, '\n');
@@ -106,12 +108,16 @@ int main() {
                 ReservationSearch::runSearchMenu(resvMgr);
                 break;
 
-            case 9: //exit
+        case 9: //generate report
+                ReportGenerator::displayAllReports(resvMgr, resMgr, wl);
+                break;
+
+            case 10: //exit
                 cout << "Goodbye! Exiting program..." << endl;
                 break;
 
             default:    //default case
-                cout << "Invalid selection. Please enter a number between 1 and 9." << endl;
+                cout << "Invalid selection. Please enter am integer between 1 and 10, inclusive." << endl;
                 break;
         }
 
