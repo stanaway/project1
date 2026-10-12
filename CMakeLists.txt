@@ -11,4 +11,5 @@ add_executable(project1_clion
         src/Resource.cpp
         src/ResourceManager.cpp
         src/WaitingList.cpp
+        src/ReservationSearch.cpp
 )
