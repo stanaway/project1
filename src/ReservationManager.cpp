@@ -16,7 +16,7 @@ using namespace std;
 
 bool isBlank(string text){
     for(char c : text){
-        if(isspace(static_cast<unsigned char>(c))){ // checks each character to see if it is a space
+        if(!isspace(static_cast<unsigned char>(c))){ // checks each character to see if it is a space
             return false;
         }
     }
