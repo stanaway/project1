@@ -1,3 +1,5 @@
+#cmakelists.txt to compile, via clion ide on emma's laptop
+
 cmake_minimum_required(VERSION 4.3)
 project(project1_clion)
 
