@@ -90,3 +90,25 @@ Example:
 
 Team Contributions
 ---------------------------------------------------------------------------------
+Zeynep Cansu:
+    - Developed the Resource and Reservation Systems using vectors and linked lists.
+    - Implemented file loading, searching, displaying, and reservation management.
+    - Added duplicate ID checks, input validation, and date-specific availability checking.
+    - Implemented Quick Sort to sort resources alphabetically by name.
+    - Fixed bugs and improved functionality of the reservation system.
+    - Collaborated with team members through GitHub by committing changes, merging code, and fixing integration problems.
+Emma Stanaway:
+    - Developed main.cpp to implement interactive program menu, handle user input, and call all required functions from respective objects and classes.
+    - Developed the ReservationSearch class (uses linear search).
+    - Developed the WaitingList class (uses queue).
+    - Developed the CancellationHistory class (uses stack).
+    - Tested program extensively to ensure smooth and bug-free user experience.
+    - Fixed miscellaneous bugs.
+    - Set up our team’s GitHub repository.
+    - Collaborated with team members through GitHub by committing changes, merging code, and fixing integration problems.
+Gabriela Magana:
+    - Implemented createReservation() and cancelReservation() in ReservationManager.cpp
+    - Added reservation validation, resource availability checks, and reservation creation and cancellation functionality.
+    - Integrated cancellation history and resource availability updates when reservations are canceled.
+    - Tested and debugged reservation management functions.
+    - Collaborated with team members through GitHub by committing changes, merging code, and fixing integration problems.
