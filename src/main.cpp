@@ -41,8 +41,18 @@ int main() {
     //  main menu loop!
     while (choice != 9) {
         printMenu();
-        cin >> choice;
-        cin.ignore();
+
+        //cin >> choice;    //obsolete because does not check bad inputs properly, causes infinite menu loop
+        //cin.ignore();
+
+        if (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid selection. Please enter am integer between 1 and 9, inclusive." << endl;
+            continue;
+        }
+        cin.ignore(10000, '\n');
 
         switch (choice) {
             case 1: //view resources
@@ -100,7 +110,7 @@ int main() {
                 break;
 
             default:    //default case
-                cout << "Invalid selection. Please enter a number between 1 and 8." << endl;
+                cout << "Invalid selection. Please enter a number between 1 and 9." << endl;
                 break;
         }
 
