@@ -44,6 +44,7 @@ int main() {
 
         switch (choice) {
             case 1:
+                resMgr.sortResourcesByName();
                 resMgr.displayResources();
                 break;
             case 2:
